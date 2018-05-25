@@ -148,7 +148,7 @@ function nomove( board ){
 
 function isgameover(){
     if(nospace(board)&&nomove(board))
-        setTimeout("gameover()",100);
+        setTimeout("gameover()",200);
 }
 
 function gameover(){
