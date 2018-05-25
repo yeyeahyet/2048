@@ -27,8 +27,10 @@ function init(){
     //初始化board数组
     for(var i = 0; i<4;i++){
         board[i] = new Array();
+        hasConflicted[i] = new Array();
         for(var j = 0;j<4;j++){
             board[i][j] = 0;
+            hasConflicted[i][j] = false;
         }
     }
     
@@ -61,6 +63,7 @@ function updateBoardView(){
                 theNumberCell.css('color',getNumberColor(board[i][j]));//返回前景色
                 theNumberCell.text(board[i][j]);
             }
+        hasConflicted[i][j] = false;
         }
     }
 }
@@ -155,14 +158,16 @@ function gameover(){
     }
 }
 
-function moveLeft(){
+function moveLeft(){//更多地细节信息
     //判断格子是否能够向左移动
     if( !canMoveLeft(board))
         return false;
-    //左移
+    
+    //真正的moveLeft函数//标准
     for(var i = 0;i<4;i++)
         for(var j = 1;j<4;j++){//第一列的数字不可能向左移动
             if(board[i][j] !=0){
+                //(i,j)左侧的元素
                 for(var k = 0;k<j;k++){
                     //判断数字是否相等 && 中间没有障碍物
                     if(board[i][k] == board[i][j] && noBlockHorizontal(i , k, j, board)&& !hasConflicted[i][k]){
@@ -194,15 +199,16 @@ function moveLeft(){
     return true;
 }
 
-function moveRight(){
+function moveRight(){//更多地细节信息
     //判断格子是否能够向右移动
     if( !canMoveRight(board))
         return false;
     
-    //右移
+    //真正的moveRight函数
     for(var i = 0;i<4;i++)
         for(var j = 2;j>=0;j--){//第四列的数字不可能向右移动
             if(board[i][j] !=0){
+                //(i,j)左侧的元素
                 for(var k = 3;k>j;k--){
                     //落脚位置的数字和本来的数字相等 && 中间没有障碍物
                     if(board[i][k] == board[i][j] && noBlockHorizontal(i , k, j, board)&& !hasConflicted[i][k]){
@@ -232,15 +238,16 @@ function moveRight(){
     return true;
 }
 
-function moveDown(){
+function moveDown(){//更多地细节信息
     //判断格子是否能够向下移动
     if( !canMoveDown(board))
         return false;
     
-    //下移
+    //真正的moveDown函数
     for(var j = 0;j<4;j++)
         for(var i = 2;i>=0;i--){//第四行的数字不可能向下移动
             if(board[i][j] !=0){
+                //(i,j)左侧的元素
                 for(var k = 3;k>i;k--){
                     //落脚位置的是否为空 && 中间没有障碍物
                     if(board[k][j] == board[i][j] && noBlockVertical(j , i, k, board)&& !hasConflicted[k][j]){
@@ -270,16 +277,17 @@ function moveDown(){
     setTimeout("updateBoardView()",200);
     return true;
 }
-  
-function moveUp(){
+
+function moveUp(){//更多地细节
     //判断格子是否能够向上移动
     if( !canMoveUp(board))
         return false;
     
-    //上移
-     for(var j = 0;j<4;j++)
+    //真正的moveup函数//标准
+    for(var j = 0;j<4;j++)
         for(var i = 1;i<4;i++){//第一行的数字不可能向上移动
             if(board[i][j] !=0){
+                //(i,j)左侧的元素
                 for(var k = 0;k < i;k++){
                     //落脚位置的是否为空 && 中间没有障碍物
                     if(board[k][j] == board[i][j] && noBlockVertical(j , k, i, board) && !hasConflicted[k][j]){
