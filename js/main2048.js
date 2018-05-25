@@ -199,7 +199,7 @@ function moveLeft(){//更多地细节信息
     return true;
 }
 
-function moveRight(){//更多地细节信息
+function moveRight(){
     //判断格子是否能够向右移动
     if( !canMoveRight(board))
         return false;
@@ -211,7 +211,7 @@ function moveRight(){//更多地细节信息
                 //(i,j)左侧的元素
                 for(var k = 3;k>j;k--){
                     //落脚位置的数字和本来的数字相等 && 中间没有障碍物
-                    if(board[i][k] == board[i][j] && noBlockHorizontal(i , k, j, board)&& !hasConflicted[i][k]){
+                    if(board[i][k] == board[i][j] && noBlockHorizontal(i , j, k, board)&& !hasConflicted[i][k]){
                         //移动
                         showMoveAnimation(i, j,i,k);
                         //相加
@@ -238,7 +238,7 @@ function moveRight(){//更多地细节信息
     return true;
 }
 
-function moveDown(){//更多地细节信息
+function moveDown(){
     //判断格子是否能够向下移动
     if( !canMoveDown(board))
         return false;
